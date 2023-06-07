@@ -12,6 +12,7 @@ export const MyPosts = () => {
                 </div>
                 <Post message='Hi! How are you?'/>
                 <Post message='Im Okey. And you?'/>
+                <Post message='Very good'/>
             </div>
             )
         }
