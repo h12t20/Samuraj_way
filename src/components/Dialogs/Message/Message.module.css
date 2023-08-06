@@ -1,0 +1,17 @@
+
+
+.me {
+    display: flex;
+color: darkslategrey;
+justify-content: start;
+    margin-right: 50px;
+    margin-top: 10px;
+
+}
+.you {
+    display: flex;
+    color: darkslategrey;
+    justify-content: end;
+    margin-left: 50px;
+    margin-top: 10px;
+}

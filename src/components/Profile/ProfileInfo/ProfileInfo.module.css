@@ -1,0 +1,11 @@
+.descriptionBlock {
+    padding: 10px;
+}
+.photo {
+    width: 100%;
+}
+.ava {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+}

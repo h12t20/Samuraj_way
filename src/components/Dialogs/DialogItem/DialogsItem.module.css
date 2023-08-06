@@ -1,0 +1,16 @@
+
+
+.dialog .active {
+
+}
+.dialog {
+text-decoration: none;
+    color: navy;
+    margin-top: 5px;
+}
+
+.active {
+    text-decoration: none;
+color: lightslategray;
+    margin-top: 5px;
+}

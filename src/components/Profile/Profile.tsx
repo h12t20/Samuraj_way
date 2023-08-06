@@ -1,18 +1,16 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from './Profile.module.css'
-import {MyPosts} from "./MyPosts/MyPosts";
-
-export const Profile = () => {
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../Redux/redux_store";
+type PtofilePropsType = {
+    profilePage: ProfileType,
+}
+export const Profile = (props: PtofilePropsType) => {
     return (
         <div>
-            <div>
-                <img className={s.photo}
-                    src='https://static.tildacdn.com/tild3661-6435-4033-b866-663064366265/panorama-gorod-mosty.jpg' alt='фото'/>
-            </div>
-            <div>
-                avatar + description
-            </div>
-            <MyPosts/>
+            <ProfileInfo profileInfo={props.profilePage.profileInfo}/>
+            <MyPostsContainer />
         </div>
-            )
-        }
+    )
+}
