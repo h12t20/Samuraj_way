@@ -1,4 +1,3 @@
-import {ChangeEvent} from "react";
 import {ActionType, UsersType} from "./redux_store";
 export type UserType = {
     id: number,
@@ -14,11 +13,13 @@ export type UserType = {
 }
 
 export const initialState = {
-    userData: []
+    userData: [],
+    pageSize:10,
+    totalCount:1,
+    currentPage:1
 }
 
 export const users_reducer = (state: UsersType = initialState, action: ActionType) => {
-    console.log(action)
     switch (action.type) {
         case 'FOLLOW': {
             return ({
@@ -33,7 +34,19 @@ export const users_reducer = (state: UsersType = initialState, action: ActionTyp
         case 'SET_USER': {
             return ({
                 ...state,
-                userData: [...state.userData, ...action.user]
+                userData: [...action.user]
+            })
+        }
+        case 'SET_CURRENT_PAGE': {
+            return ({
+                ...state,
+                currentPage:action.currentPage
+            })
+        }
+        case 'SET_TOTAL_USERS': {
+            return ({
+                ...state,
+                totalCount:action.totalUsers
             })
         }
         default:
@@ -42,13 +55,26 @@ export const users_reducer = (state: UsersType = initialState, action: ActionTyp
 }
 export type FollowACType = ReturnType<typeof followAC>
 export type SetUserACType = ReturnType<typeof setUserAC>
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
+
 export const followAC = (id: number) =>
     ({
         type: 'FOLLOW',
         userID: id
-    } as const)
+    } as const);
 export const setUserAC = (user: UserType[]) => (
     {
         type: 'SET_USER',
-        user: user
-    } as const)
+        user
+    } as const);
+export const setCurrentPageAC = (currentPage: number) => (
+    {
+        type: 'SET_CURRENT_PAGE',
+        currentPage
+    } as const);
+export const setTotalUsersCountAC = (totalUsers: number) => (
+    {
+        type: 'SET_TOTAL_USERS',
+        totalUsers
+    } as const);

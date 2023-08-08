@@ -1,8 +1,10 @@
-import React from "react";
 import {connect} from "react-redux";
-import {Users} from './Users';
-import {ActionType, StateType, UsersType} from "../../Redux/redux_store";
-import {followAC, setUserAC, UserType} from "../../Redux/users_reducer";
+import {UsersAPI} from './UsersAPI';
+import {ActionType, StateType} from "../../Redux/redux_store";
+import {
+    followAC, setCurrentPageAC, setTotalUsersCountAC, setUserAC,
+    UserType
+} from "../../Redux/users_reducer";
 
 const mapStateToProps = (state: StateType) => {
     return {
@@ -17,7 +19,13 @@ const mapDispatchToProps = (dispatch: (action: ActionType)
         },
         setUsers: (users: UserType[]) => {
             dispatch(setUserAC(users));
+        },
+        setCurrentPage:(page:number)=>{
+            dispatch(setCurrentPageAC(page))
+        },
+        setTotalUsersCount: (usersCount: number) => {
+            dispatch(setTotalUsersCountAC(usersCount));
         }
     }
 }
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPI)

@@ -1,7 +1,14 @@
 import {combineReducers, createStore} from "redux";
 import {AddPostACType, InputPostACType, profile_reducer} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer, InputMessageACType} from "./dialogs_reducer";
-import {FollowACType, SetUserACType, users_reducer, UserType} from "./users_reducer";
+import {
+    FollowACType,
+    SetCurrentPageACType,
+    setTotalUsersCountACType,
+    SetUserACType,
+    users_reducer,
+    UserType
+} from "./users_reducer";
 
 let reducers = combineReducers({
     profilePage: profile_reducer,
@@ -11,7 +18,7 @@ let reducers = combineReducers({
 export let store = createStore(reducers)
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
-    FollowACType | SetUserACType;
+    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType
 export type ProfileType = {
     postsData: {
         id: number;
@@ -39,10 +46,13 @@ export type MessageType = {
     newMessageTitle: string;
 }
 export type UsersType = {
-    userData: UserType[]
+    userData: UserType[],
+    pageSize:number,
+    totalCount:number,
+    currentPage:number
 }
 export type StateType = {
     messagesPage: MessageType,
     profilePage: ProfileType,
-    usersPage: UsersType
+    usersPage: UsersType,
 }
