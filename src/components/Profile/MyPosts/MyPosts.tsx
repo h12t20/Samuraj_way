@@ -2,23 +2,24 @@ import React, {ChangeEvent} from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 
-import {ProfileType} from "../../../Redux/redux_store";
+import {PostDataType} from "../../../Redux/redux_store";
 
 type MyPostsPropsType = {
-    profilePage: ProfileType,
+    postData: PostDataType[],
+    newPostTitle:string,
     inputPostHandler: (event: ChangeEvent<HTMLTextAreaElement>) => void,
     addPostHandler: () => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
-    let postsElements = props.profilePage.postsData.map(post =>
+    let postsElements = props.postData.map(post =>
         <Post key={post.id} message={post.message}
               likesCount={post.likesCount}/>)
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div><textarea value={props.profilePage.newPostTitle}
+                <div><textarea value={props.newPostTitle}
                                onChange={(event) =>
                                    props.inputPostHandler(event)}></textarea></div>
                 <div>

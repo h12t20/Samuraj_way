@@ -1,10 +1,11 @@
 import {combineReducers, createStore} from "redux";
-import {AddPostACType, InputPostACType, profile_reducer} from "./profile_reducer";
+import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer, InputMessageACType} from "./dialogs_reducer";
 import {
     FollowACType,
     SetCurrentPageACType,
     setTotalUsersCountACType,
+    toggleFetchingACType,
     SetUserACType,
     users_reducer,
     UserType
@@ -15,20 +16,39 @@ let reducers = combineReducers({
     messagesPage: dialogs_reducer,
     usersPage: users_reducer
 })
-export let store = createStore(reducers)
+export let store = createStore(reducers);
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
-    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType
-export type ProfileType = {
-    postsData: {
+    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType | SetUserProfileType
+export type ProfileInfoType = {
+    aboutMe: string,
+    contacts: {
+        facebook: string | null,
+        website: string | null,
+        vk: string | null,
+        twitter: string | null,
+        instagram: string | null,
+        youtube: string | null,
+        github: string | null,
+        mainLink: string | null
+    },
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: number,
+    photos: {
+        small: string | null,
+        large: string | null
+    }
+}
+export type PostDataType = {
         id: number;
         message: string;
         likesCount: number;
-    }[],
-    profileInfo: {
-        name: string;
-        avatar: string
-    },
+}
+export type ProfileType = {
+    postsData: PostDataType[],
+    profileInfo: ProfileInfoType,
     newPostTitle: string
 };
 export type MessageType = {
@@ -49,7 +69,8 @@ export type UsersType = {
     userData: UserType[],
     pageSize:number,
     totalCount:number,
-    currentPage:number
+    currentPage:number,
+    isFetching:boolean
 }
 export type StateType = {
     messagesPage: MessageType,

@@ -1,15 +1,12 @@
-import React, {ChangeEvent} from "react";
-import s from './Profile.module.css'
+import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../Redux/redux_store";
-type PtofilePropsType = {
-    profilePage: ProfileType,
-}
-export const Profile = (props: PtofilePropsType) => {
+import {ProfileInfoType} from "../../Redux/redux_store";
+export type ProfilePropsType = { profileInfo: ProfileInfoType }
+export const Profile = (props: ProfilePropsType) => {
     return (
         <div>
-            <ProfileInfo profileInfo={props.profilePage.profileInfo}/>
+            <ProfileInfo profileInfo={props.profileInfo}/>
             <MyPostsContainer />
         </div>
     )
