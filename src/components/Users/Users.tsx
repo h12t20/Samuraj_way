@@ -5,6 +5,7 @@ import {UserType} from "../../Redux/users_reducer";
 import userPhoto from '../../assets/images/user.svg'
 import {Pagination} from "../common/Pagination";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 type UsersPropsType = {
     usersPage: UsersType;
@@ -24,11 +25,29 @@ export const Users = (props: UsersPropsType) => {
                                   alt='avatar'/>
                         </div>
                         </NavLink>
-                        <div><button
-                            onClick={() => props.follow(u.id)}>{u.followed ? 'Unfollow' : 'Follow'}</button></div>
-                    </span>
+                        <div>
+                           {!u.followed && <button
+                                onClick={() => {
+                                    axios
+                                        .post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                            {}, {withCredentials: true})
+                                        .then(response => {
+                                            if (response.data.resultCode === 0) props.follow(u.id)
+                                        })
+                                }}>Follow</button>}
+                            {u.followed && <button
+                            onClick={() => {
+                                axios
+                                    .delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                        {withCredentials: true})
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) props.follow(u.id)
+                                    })
+                            }}>Unfollow</button>}
+                        </div>
+                                </span>
                     <span>
-                            <div>{u.name}</div>
+                                <div>{u.name}</div>
                             <div>{u.status}</div>
                         </span>
                 </div>
