@@ -10,16 +10,19 @@ import {
     users_reducer,
     UserType
 } from "./users_reducer";
+import {auth_reducer, SetUserDataType} from './auth_reducer'
 
 let reducers = combineReducers({
     profilePage: profile_reducer,
     messagesPage: dialogs_reducer,
-    usersPage: users_reducer
+    usersPage: users_reducer,
+    auth: auth_reducer
 })
 export let store = createStore(reducers);
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
-    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType | SetUserProfileType
+    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
+    SetUserProfileType | SetUserDataType
 export type ProfileInfoType = {
     aboutMe: string,
     contacts: {
@@ -72,8 +75,15 @@ export type UsersType = {
     currentPage:number,
     isFetching:boolean
 }
+export type AuthType = {
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isFetching: boolean
+}
 export type StateType = {
     messagesPage: MessageType,
     profilePage: ProfileType,
     usersPage: UsersType,
+    auth : AuthType
 }

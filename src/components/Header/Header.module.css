@@ -1,7 +1,21 @@
 .header {
     grid-area: h;
     background-color: lightseagreen;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 .header img {
     width: 120px;
+}
+.loginBlock {
+    margin-right: 20px;
+    text-decoration: none;
+    color: white;
+}
+.loginBlock a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
 }
