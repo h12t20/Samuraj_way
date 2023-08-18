@@ -10,7 +10,7 @@ import {
     users_reducer,
     UserType
 } from "./users_reducer";
-import {auth_reducer, SetUserDataType} from './auth_reducer'
+import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
 
 let reducers = combineReducers({
     profilePage: profile_reducer,
@@ -22,9 +22,8 @@ export let store = createStore(reducers);
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
-    SetUserProfileType | SetUserDataType
+    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType
 export type ProfileInfoType = {
-    aboutMe: string,
     contacts: {
         facebook: string | null,
         website: string | null,
@@ -73,7 +72,7 @@ export type UsersType = {
     pageSize:number,
     totalCount:number,
     currentPage:number,
-    isFetching:boolean
+    isFetching:boolean,
 }
 export type AuthType = {
     id: number | null,

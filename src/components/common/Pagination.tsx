@@ -21,7 +21,6 @@ export const Pagination = (props: UsersPropsType) => {
             pages.push(i)
         }
     }
-
     return (
         <div className={s.container}>
             <div className={s.paginationBlock}>

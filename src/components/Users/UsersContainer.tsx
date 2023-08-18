@@ -1,7 +1,14 @@
 import React, {ReactNode} from "react";
 import {connect} from "react-redux";
 import {StateType, UsersType} from "../../Redux/redux_store";
-import {follow, setCurrentPage, setTotalUsersCount, setUser, toggleFetching, UserType} from "../../Redux/users_reducer";
+import {
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUser,
+    toggleFetching,
+    UserType
+} from "../../Redux/users_reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader";
 import {usersAPI} from "../../api/usersAPI";
@@ -37,7 +44,8 @@ class UsersContainer extends React.Component<UsersPropsType, {children?: ReactNo
     render() {
         return <>
             {this.props.usersPage.isFetching? <Preloader/>:null}
-        <Users usersPage={this.props.usersPage} follow={this.props.follow} onPageChanged={this.onPageChanged}/>
+        <Users usersPage={this.props.usersPage} follow={this.props.follow}
+               onPageChanged={this.onPageChanged}/>
         </>
     }
 }

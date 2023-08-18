@@ -1,7 +1,7 @@
 import React, {ReactNode} from "react";
 import {connect} from "react-redux";
 import {AuthType, StateType} from "../../Redux/redux_store";
-import {toggleAuthFetching, setAuthUserData} from '../../Redux/auth_reducer'
+import {setAuthUserData, toggleAuthFetching} from '../../Redux/auth_reducer'
 import {Preloader} from "../common/Preloader";
 import {Header} from "./Header";
 import {authAPI} from "../../api/authAPI";

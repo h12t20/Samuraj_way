@@ -17,8 +17,6 @@ export const ProfileInfo = (props: ProfilePropsType) => {
                     props.profileInfo.photos.small ? props.profileInfo.photos.small: user}
                      alt='photo'/>
                 <div>{props.profileInfo.fullName}</div>
-                <div>{props.profileInfo.aboutMe}</div>
-
             </div>
         </div>
     )

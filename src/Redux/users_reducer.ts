@@ -53,7 +53,7 @@ export const users_reducer = (state: UsersType = initialState, action: ActionTyp
         case 'TOGGLE_FETCHING': {
             return ({
                 ...state,
-                isFetching:!state.isFetching
+                isFetching:action.isFetching
             })
         }
         default:
