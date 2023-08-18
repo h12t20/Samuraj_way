@@ -2,9 +2,9 @@ import React, {ReactNode} from "react";
 import {connect} from "react-redux";
 import {AuthType, StateType} from "../../Redux/redux_store";
 import {toggleAuthFetching, setAuthUserData} from '../../Redux/auth_reducer'
-import axios from "axios";
 import {Preloader} from "../common/Preloader";
 import {Header} from "./Header";
+import {authAPI} from "../../api/authAPI";
 type UsersPropsType = {
     setAuthUserData: (data: AuthType) => void,
     toggleAuthFetching: (isFetching: boolean) => void,
@@ -16,10 +16,9 @@ class HeaderContainer extends React.Component<UsersPropsType, {
 }> {
     componentDidMount() {
         this.props.toggleAuthFetching(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
-            .then((response)=> {
-                if (response.data.resultCode===0) this.props.setAuthUserData(response.data.data);
+       authAPI.auth()
+            .then((data)=> {
+                if (data.resultCode===0) this.props.setAuthUserData(data.data);
             })
             .finally(() => this.props.toggleAuthFetching(false))
     }

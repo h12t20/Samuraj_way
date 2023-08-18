@@ -2,9 +2,9 @@ import React, {ReactNode} from "react";
 import {connect} from "react-redux";
 import {StateType, UsersType} from "../../Redux/redux_store";
 import {follow, setCurrentPage, setTotalUsersCount, setUser, toggleFetching, UserType} from "../../Redux/users_reducer";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader";
+import {usersAPI} from "../../api/usersAPI";
 
 type UsersPropsType = {
     usersPage: UsersType;
@@ -18,12 +18,10 @@ type UsersPropsType = {
 class UsersContainer extends React.Component<UsersPropsType, {children?: ReactNode}> {
     componentDidMount() {
         this.props.toggleFetching(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.usersPage.currentPage}&count=${this.props.usersPage.pageSize}`,
-                {withCredentials: true})
-            .then(response => {
-                this.props.setUser(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount)
+        usersAPI.getUsers(this.props.usersPage.currentPage, this.props.usersPage.pageSize)
+            .then(data => {
+                this.props.setUser(data.items);
+                this.props.setTotalUsersCount(data.totalCount)
             })
             .finally(()=>this.props.toggleFetching(false))
     }
@@ -31,10 +29,8 @@ class UsersContainer extends React.Component<UsersPropsType, {children?: ReactNo
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page);
         this.props.toggleFetching(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersPage.pageSize}`,
-                {withCredentials: true})
-            .then(response => {this.props.setUser(response.data.items)})
+       usersAPI.getUsers(page, this.props.usersPage.pageSize)
+            .then(data => {this.props.setUser(data.items)})
             .finally(()=>this.props.toggleFetching(false))
     }
 
