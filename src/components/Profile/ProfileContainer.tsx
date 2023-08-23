@@ -15,7 +15,6 @@ type ProfilePropsType = {
 type RoutePropsType = RouteComponentProps<{id: string}> & ProfilePropsType
 
 class ProfileContainer extends React.Component<RoutePropsType, { children?: ReactNode }> {
-
     componentDidMount() {
         let id= !this.props.match.params.id? '2': this.props.match.params.id
         axios
@@ -24,7 +23,6 @@ class ProfileContainer extends React.Component<RoutePropsType, { children?: Reac
                 this.props.setUserProfile(response.data);
             })
     }
-
     render() {
         return (
             <Profile profileInfo={this.props.profileInfo}/>
