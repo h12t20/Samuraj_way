@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer, InputMessageACType} from "./dialogs_reducer";
 import {
@@ -11,14 +11,15 @@ import {
     UserType
 } from "./users_reducer";
 import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
+import thunkMiddleware from 'redux-thunk'
 
-let reducers = combineReducers({
+const reducers = combineReducers({
     profilePage: profile_reducer,
     messagesPage: dialogs_reducer,
     usersPage: users_reducer,
     auth: auth_reducer
 })
-export let store = createStore(reducers);
+export let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |

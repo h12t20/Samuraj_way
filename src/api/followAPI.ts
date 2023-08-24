@@ -1,15 +1,12 @@
-import {UserType} from "../Redux/users_reducer";
 import {instance} from "./instance";
 
 export const followAPI = {
-    follow(u: UserType) {
-        return instance
-            .post(`follow/${u.id}`)
-            .then(response => response.data)
+    async follow(userID: number) {
+        const response = await instance.post(`follow/${userID}`);
+        return response.data;
     },
-    unfollow(u: UserType) {
-        return instance
-            .delete(`follow/${u.id}`)
-            .then(response => response.data)
+    async unfollow(userID: number) {
+        const response = await instance.delete(`follow/${userID}`);
+        return response.data;
     },
 }

@@ -7,7 +7,7 @@ import {FollowButton} from "./FollowButton/FollowButton";
 
 export type UserPropsType = {
     u: UserType,
-    follow: (userId: number) => void;
+    followUsers: (isFollow: boolean, userID: number, setDisableButton: React.Dispatch<React.SetStateAction<boolean>>) => void
 }
 export const User = (props: UserPropsType) => {
     return (
@@ -19,12 +19,12 @@ export const User = (props: UserPropsType) => {
                         </div>
                         </NavLink>
                         <div>
-                           <FollowButton u={props.u} follow={props.follow}/>
+                           <FollowButton userID={props.u.id} followed={props.u.followed} followUsers={props.followUsers}/>
                         </div>
-                                </span>
+                    </span>
             <span>
-                                <div>{props.u.name}</div>
-                            <div>{props.u.status}</div>
-                        </span>
+                <div>{props.u.name}</div>
+                <div>{props.u.status}</div>
+            </span>
         </div>)
 }

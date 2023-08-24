@@ -1,4 +1,6 @@
 import {ActionType, AuthType} from "./redux_store";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/authAPI";
 const initialState = {
     id: null,
     email: null,
@@ -36,3 +38,15 @@ export const toggleAuthFetching = (isFetching:boolean) => (
             type: 'TOGGLE_AUTH_FETCHING',
             isFetching
         } as const);
+
+export const getAuth = ()=>{
+    return (dispatch:Dispatch) => {
+        toggleAuthFetching(true);
+        authAPI.auth()
+            .then((data)=> {
+                const {resultCode} = data;
+                if (resultCode===0) dispatch(setAuthUserData(data.data));
+            })
+            .finally(() => dispatch(toggleAuthFetching(false)))
+    }
+}

@@ -1,5 +1,7 @@
 import {ChangeEvent} from "react";
 import {ActionType, ProfileInfoType} from "./redux_store";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/profileAPI";
 
 const initialState = {
     postsData: [
@@ -71,3 +73,9 @@ export const setUserProfile = (profileInfo: ProfileInfoType) => ({
     type: 'SET_USER_PROFILE',
     profileInfo
 } as const)
+export const getProfile = (userId:number) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfile(userId)
+            .then(res => {dispatch(setUserProfile(res))})
+    }
+}

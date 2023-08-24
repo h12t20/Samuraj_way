@@ -1,8 +1,8 @@
 import {instance} from "./instance";
 export const authAPI = {
-    auth() {
-        return instance
-            .get(`auth/me`)
-            .then(response => response.data)
+    async auth() {
+        const response = await instance
+            .get(`auth/me`);
+        return response.data;
     }
 }

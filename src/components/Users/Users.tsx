@@ -7,8 +7,8 @@ import {User} from "./User/User";
 
 type UsersPropsType = {
     usersPage: UsersType;
-    follow: (userId: number) => void;
     onPageChanged: (page: number) => void;
+    followUsers: (isFollow: boolean, userId: number, setDisableButton: React.Dispatch<React.SetStateAction<boolean>>)=>void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -16,7 +16,7 @@ export const Users = (props: UsersPropsType) => {
         <div className={s.container}>
             <Pagination usersPage={props.usersPage} onPageChanged={props.onPageChanged}/>
             {props.usersPage.userData.map((u: UserType) =>
-                <User key={u.id} u={u} follow={props.follow}/>
+                <User key={u.id} u={u} followUsers={props.followUsers}/>
             )}
         </div>
     )

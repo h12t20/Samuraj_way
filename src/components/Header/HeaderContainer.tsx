@@ -1,26 +1,20 @@
 import React, {ReactNode} from "react";
 import {connect} from "react-redux";
 import {AuthType, StateType} from "../../Redux/redux_store";
-import {setAuthUserData, toggleAuthFetching} from '../../Redux/auth_reducer'
+import {getAuth} from '../../Redux/auth_reducer'
 import {Preloader} from "../common/Preloader";
 import {Header} from "./Header";
-import {authAPI} from "../../api/authAPI";
+
 type UsersPropsType = {
-    setAuthUserData: (data: AuthType) => void,
-    toggleAuthFetching: (isFetching: boolean) => void,
-    auth: AuthType
+    auth: AuthType,
+    getAuth:()=>void
 }
 
 class HeaderContainer extends React.Component<UsersPropsType, {
     children?: ReactNode
 }> {
     componentDidMount() {
-        this.props.toggleAuthFetching(true);
-       authAPI.auth()
-            .then((data)=> {
-                if (data.resultCode===0) this.props.setAuthUserData(data.data);
-            })
-            .finally(() => this.props.toggleAuthFetching(false))
+        this.props.getAuth()
     }
 
     render() {
@@ -32,5 +26,5 @@ class HeaderContainer extends React.Component<UsersPropsType, {
 }
 
 const mapStateToProps = (state: StateType) => ({auth: state.auth})
-const mapDispatchToProps = {setAuthUserData, toggleAuthFetching}
+const mapDispatchToProps = {getAuth}
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)
