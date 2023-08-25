@@ -4,7 +4,7 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {MessageType} from "../../Redux/redux_store";
 
-type DialogsPropsType = {
+export type DialogsPropsType = {
     messagesPage: MessageType
     inputMessageHandler:(event:ChangeEvent<HTMLTextAreaElement>)=>void,
     addMessageHandler:()=>void

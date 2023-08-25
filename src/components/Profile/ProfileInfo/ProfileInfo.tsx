@@ -1,9 +1,9 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import {ProfilePropsType} from "../Profile";
 import {Preloader} from "../../common/Preloader";
 import user from '../../../assets/images/user.svg'
-export const ProfileInfo = (props: ProfilePropsType) => {
+import {ProfileInfoType} from "../../../Redux/redux_store";
+export const ProfileInfo = (props: {profileInfo: ProfileInfoType}) => {
     if (!props.profileInfo) return <Preloader/>
    return (
         <div>
