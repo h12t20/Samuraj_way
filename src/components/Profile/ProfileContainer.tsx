@@ -2,25 +2,35 @@ import React, {ReactNode} from "react";
 import {ProfileInfoType, StateType} from "../../Redux/redux_store";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getProfile} from "../../Redux/profile_reducer";
+import {getProfile, getStatus, updateStatus} from "../../Redux/profile_reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+
 export type ProfilePropsType = {
+    status: string,
     profileInfo: ProfileInfoType,
-    getProfile:(userID:number)=>void,
+    getProfile: (userID: number) => void,
+    getStatus: (userID: number) => void,
+    updateStatus: (status:string) => void,
 }
-type RoutePropsType = RouteComponentProps<{id: string}> & ProfilePropsType
+type RoutePropsType = RouteComponentProps<{ id: string }> & ProfilePropsType
+
 class ProfileContainer extends React.Component<RoutePropsType, { children?: ReactNode }> {
     componentDidMount() {
-        const id= !this.props.match.params.id? '2': this.props.match.params.id
+        const id = !this.props.match.params.id ? '29483' : this.props.match.params.id
         this.props.getProfile(+id)
+        this.props.getStatus(+id)
     }
+
     render() {
         return (
-            <Profile profileInfo={this.props.profileInfo}/>
+            <Profile profileInfo={this.props.profileInfo} status={this.props.status} updateStatus={this.props.updateStatus}/>
         )
     }
 }
-const AuthRedirectComponent=withAuthRedirect(ProfileContainer)
-const mapStateToProps = (state: StateType) => ({profileInfo:state.profilePage.profileInfo});
-export default connect(mapStateToProps, {getProfile})(withRouter(AuthRedirectComponent));
+
+const mapStateToProps = (state: StateType) =>
+    ({profileInfo: state.profilePage.profileInfo, status:state.profilePage.status});
+export default compose<React.ElementType>(connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
+    withRouter, withAuthRedirect)(ProfileContainer)

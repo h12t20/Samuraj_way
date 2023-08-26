@@ -19,7 +19,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div><textarea value={props.newPostTitle}
+                <div><textarea id='myPostField' value={props.newPostTitle}
                                onChange={(event) =>
                                    props.inputPostHandler(event)}></textarea></div>
                 <div>

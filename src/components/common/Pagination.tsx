@@ -1,13 +1,13 @@
 import React from "react";
 import {UsersType} from "../../Redux/redux_store";
-import s from '../Users/Users.module.css'
+import s from '../common/EditableSpan.module.css'
 import {EditableSpan} from "./EditableSpan";
-
+export type CSSType= typeof s
 type UsersPropsType = {
     usersPage: UsersType;
-    onPageChanged: (page: number) => void
+    onPageChanged: (page: number | string) => void
 }
-export const Pagination = (props: UsersPropsType) => {
+export const Pagination = React.memo((props: UsersPropsType) => {
     const totalCount=props.usersPage.totalCount;
     const curPage=props.usersPage.currentPage;
     const pagesCount = Math.ceil(totalCount / props.usersPage.pageSize);
@@ -21,28 +21,36 @@ export const Pagination = (props: UsersPropsType) => {
             pages.push(i)
         }
     }
+    const onKeyPress=(e:React.KeyboardEvent<HTMLInputElement>,inputTitle:string) => {
+        if (e.key === 'Enter' && +inputTitle>0 && +inputTitle <= pagesCount) props.onPageChanged(+inputTitle)
+    }
+    const verificationRule: (value:string)=>boolean=(value)=>value ==='' ||
+        (+value>0 && +value<=pagesCount && value.length<100);
+    const editableSpanProps ={
+        defaultInputTitleValue:curPage? curPage.toString():'1',
+        labelText: ' ... ',
+        verificationRule,
+        onKeyPress,
+        className: s
+    }
     return (
         <div className={s.container}>
             <div className={s.paginationBlock}>
                 {curPage >5 && <span className={s.pagination} style={curPage === 1 ?
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(1)}}>1</span>}
-                {curPage>5 &&
-                <EditableSpan curPage={curPage} onPageChanged={props.onPageChanged} pagesCount={pagesCount}/>}
+                {curPage>5 && <EditableSpan {...editableSpanProps} id='firstPagination'/>}
                 {pages.map(p => <span key={p} className={s.pagination} style={curPage === p ?
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(p)}}>{p}</span>)}
-                {pagesCount>8 && curPage<pagesCount-3 &&
-                    <EditableSpan curPage={curPage} onPageChanged={props.onPageChanged} pagesCount={pagesCount}/>}
+                {pagesCount>8 && curPage<pagesCount-3 && <EditableSpan {...editableSpanProps} id='secondPagination'/>}
                 {pagesCount>6 && curPage < pagesCount-2 && <span className={s.pagination} style={curPage === pagesCount ?
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(pagesCount)}}>{pagesCount}</span>}
-                {totalCount > 20 && curPage > 1 && <span className={s.pagination} onClick={() => {
-                        props.onPageChanged(curPage >1 ?
-                            curPage - 1 : pagesCount)
-                    }}>{(String.fromCharCode(60)).repeat(2)} назад</span>}
-                {totalCount > 20 && <span className={s.pagination} onClick={() => {
+                {pagesCount > 10 && curPage > 1 && <span className={s.pagination} onClick={() => {
+                    props.onPageChanged(curPage >1 ? curPage - 1 : pagesCount)
+                }}>{(String.fromCharCode(60)).repeat(2)} назад</span>}
+                {pagesCount > 10 && curPage!== pagesCount && <span className={s.pagination} onClick={() => {
                     props.onPageChanged(curPage < pagesCount ? curPage + 1 : pagesCount)
                 }}>вперёд {(String.fromCharCode(62)).repeat(2)}</span>}
             </div>
         </div>
     )
-}
-
+})

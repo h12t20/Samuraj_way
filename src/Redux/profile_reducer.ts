@@ -27,7 +27,8 @@ const initialState = {
         },
     ],
     profileInfo: null,
-    newPostTitle: ''
+    newPostTitle: '',
+    status: ''
 }
 
 export const profile_reducer = (state = initialState, action: ActionType) => {
@@ -56,6 +57,12 @@ export const profile_reducer = (state = initialState, action: ActionType) => {
                 profileInfo: action.profileInfo
             })
         }
+        case 'SET_STATUS': {
+            return ({
+                ...state,
+                status: action.status
+            })
+        }
         default:
             return state
     }
@@ -63,6 +70,7 @@ export const profile_reducer = (state = initialState, action: ActionType) => {
 export type InputPostACType = ReturnType<typeof inputPost>
 export type AddPostACType = ReturnType<typeof addPost>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
+export type SetStatusType = ReturnType<typeof setStatus>
 export const inputPost = (e: ChangeEvent<HTMLTextAreaElement>) =>
     ({
         type: 'INPUT_POST',
@@ -73,9 +81,27 @@ export const setUserProfile = (profileInfo: ProfileInfoType) => ({
     type: 'SET_USER_PROFILE',
     profileInfo
 } as const)
+export const setStatus = (status: string) => ({
+    type: 'SET_STATUS',
+    status
+} as const)
 export const getProfile = (userId:number) => {
     return (dispatch: Dispatch) => {
         profileAPI.getProfile(userId)
             .then(res => {dispatch(setUserProfile(res))})
+    }
+}
+export const getStatus = (userId:number) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getStatus(userId)
+            .then(res => {
+                dispatch(setStatus(res))})
+    }
+}
+export const updateStatus = (status:string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(res => {
+                if (res.resultCode===0) dispatch(setStatus(status))})
     }
 }

@@ -22,7 +22,7 @@ export const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 {messagesElements}
-                <div><textarea value={props.messagesPage.newMessageTitle}
+                <div><textarea id='dialogsTextArea' value={props.messagesPage.newMessageTitle}
                                onChange={(event) =>
                                    props.inputMessageHandler(event)}></textarea></div>
                 <div>

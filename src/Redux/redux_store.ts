@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer} from "./profile_reducer";
+import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer, SetStatusType} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer, InputMessageACType} from "./dialogs_reducer";
 import {
     FollowACType,
@@ -23,7 +23,7 @@ export let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
-    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType
+    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType
 export type ProfileInfoType = {
     contacts: {
         facebook: string | null,
@@ -52,7 +52,8 @@ export type PostDataType = {
 export type ProfileType = {
     postsData: PostDataType[],
     profileInfo: ProfileInfoType,
-    newPostTitle: string
+    newPostTitle: string,
+    status: string
 };
 export type MessageType = {
     dialogsData:

@@ -1,0 +1,21 @@
+
+.pagination {
+    padding: 5px 5px;
+    height:50px;
+    width: 50px;
+    border: 1px gray solid;
+    cursor: pointer;
+    margin: 1px 1px 1px 1px
+
+}
+
+.inputPagination {
+    background-color: transparent;
+    width: 40px;
+   font-size: 15px;
+    height: 25px;
+    border: 1px gray solid;
+    cursor: pointer;
+
+
+}

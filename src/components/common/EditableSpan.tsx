@@ -1,31 +1,34 @@
 import React, {ChangeEvent, useState} from "react";
-import s from "../Users/Users.module.css";
+import {CSSType} from "./Pagination";
 
 type EditableSpanPropsType = {
-    curPage: number
-    pagesCount: number
-    onPageChanged: (page: number) => void
+    id:string
+    defaultInputTitleValue: string
+    labelText: string
+    onKeyPress: (e:React.KeyboardEvent<HTMLInputElement>,inputTitle:string)=>void
+    verificationRule:(value:string)=>boolean,
+    className:CSSType
 }
-export const EditableSpan = (props: EditableSpanPropsType) => {
-    const [inputPaginationTitle, setInputPaginationTitle] = useState(1);
+export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+    const [inputTitle, setInputTitle] = useState(props.defaultInputTitleValue);
     const [editableSpanVision, setEditableSpanVision] = useState(false);
     return (
         editableSpanVision ?
-        <input className={s.inputPagination} autoFocus={true} value={inputPaginationTitle}
-               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                   const page:number | null = e.currentTarget.value==''? 0:+e.currentTarget.value;
-                   if (page >= 0 && page <= props.pagesCount) setInputPaginationTitle(page)
-               }}
-               onKeyPress={e => {
-                   const val = inputPaginationTitle;
-                   if (e.key === 'Enter' && val > 0 && val <= props.pagesCount) props.onPageChanged(inputPaginationTitle)
-               }}
-               onBlur={() => {
-                   setEditableSpanVision(!editableSpanVision);
-                   setInputPaginationTitle(1)
-               }}/> :
-        <span className={s.pagination} onClick={() => {
-            setEditableSpanVision(!editableSpanVision);
-            setInputPaginationTitle(props.curPage)
-        }}> ... </span>)
-}
+            <input id={props.id} className={props.className.inputPagination} autoFocus={true} value={inputTitle}
+                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                       const value: string | null = e.currentTarget.value
+                       if (props.verificationRule(value)) setInputTitle(value)
+                   }}
+                   onKeyPress={(e:React.KeyboardEvent<HTMLInputElement>)=>{props.onKeyPress(e, inputTitle)
+                       if (e.key==='Enter') {setEditableSpanVision(!editableSpanVision);
+                       setInputTitle('1')}
+            }}
+                   onBlur={() => {
+                       setEditableSpanVision(!editableSpanVision);
+                       setInputTitle('1')
+                   }} title='Type and press Enter'/> :
+            <span className={props.className.pagination} onClick={() => {
+                setEditableSpanVision(!editableSpanVision);
+                setInputTitle(props.defaultInputTitleValue)
+            }}> {props.labelText} </span>)
+})

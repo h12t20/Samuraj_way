@@ -5,16 +5,17 @@ import {followUsers, getUsers} from "../../Redux/users_reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type UsersPropsType = {
     usersPage: UsersType;
-    getUsers:(currentPage:number, pageSize:number)=>void;
+    getUsers:(currentPage:number | string, pageSize:number)=>void;
     followUsers:(isFollow: boolean, userID: number, setFollowingProgress: React.Dispatch<React.SetStateAction<boolean>>)=>void
 }
 
 class UsersContainer extends React.Component<UsersPropsType, {children?: ReactNode}> {
     componentDidMount() {this.props.getUsers(this.props.usersPage.currentPage, this.props.usersPage.pageSize)}
-    onPageChanged = (page: number) => {this.props.getUsers(page, this.props.usersPage.pageSize)}
+    onPageChanged = (page: number | string) => {this.props.getUsers(page, this.props.usersPage.pageSize)}
     render() {
         return <>
             {this.props.usersPage.isFetching? <Preloader/>:null}
@@ -23,7 +24,6 @@ class UsersContainer extends React.Component<UsersPropsType, {children?: ReactNo
         </>
     }
 }
-
 const mapStateToProps = (state: StateType) => ({usersPage: state.usersPage})
 const mapDispatchToProps = {getUsers, followUsers}
-export default withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(UsersContainer))
+export default compose<React.ElementType>(connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(UsersContainer)

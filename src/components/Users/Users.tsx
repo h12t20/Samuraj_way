@@ -7,7 +7,7 @@ import {User} from "./User/User";
 
 type UsersPropsType = {
     usersPage: UsersType;
-    onPageChanged: (page: number) => void;
+    onPageChanged: (page: number | string) => void;
     followUsers: (isFollow: boolean, userId: number, setDisableButton: React.Dispatch<React.SetStateAction<boolean>>)=>void
 }
 
