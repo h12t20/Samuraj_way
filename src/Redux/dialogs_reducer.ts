@@ -1,4 +1,3 @@
-import {ChangeEvent} from "react";
 import {ActionType} from "./redux_store";
 
 const initialState = {
@@ -51,37 +50,25 @@ const initialState = {
             text: 'Yo!'
         },
     ],
-    newMessageTitle: ''
+
 }
 export const dialogs_reducer = (state= initialState, action: ActionType) => {
     switch (action.type) {
-        case 'INPUT_MESSAGE': {
-            return ({
-                ...state,
-                newMessageTitle: action.payload
-            })
-        }
         case 'ADD_MESSAGE': {
             let newMessage = {
                 id: 6,
                 author: 'me',
-                text: state.newMessageTitle
+                text: action.newMessageText
             }
             return ({
                 ...state,
                 messageData: [...state.messageData, newMessage],
-                newMessageTitle: ''
             })
         }
         default:
             return state
     }
 }
-export type InputMessageACType = ReturnType<typeof inputMessageAC>
 export type AddMessageACType = ReturnType<typeof addMessageAC>
-export const inputMessageAC = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    ({
-        type: 'INPUT_MESSAGE',
-        payload: e.currentTarget.value
-    } as const)
-export const addMessageAC = () => ({type: 'ADD_MESSAGE'} as const)
+
+export const addMessageAC = (newMessageText:string) => ({type: 'ADD_MESSAGE', newMessageText} as const)

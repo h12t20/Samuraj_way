@@ -1,30 +1,29 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 
 import {PostDataType} from "../../../Redux/redux_store";
+import {reduxForm} from "redux-form";
+import {AddPostForm} from "./AddPostForm";
 
 type MyPostsPropsType = {
     postData: PostDataType[],
     newPostTitle:string,
-    inputPostHandler: (event: ChangeEvent<HTMLTextAreaElement>) => void,
-    addPostHandler: () => void
+    addPostHandler: (newPost:string) => void
 }
-
 export const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.postData.map(post =>
         <Post key={post.id} message={post.message}
               likesCount={post.likesCount}/>)
+    const addNewPost=(values:any)=>{
+props.addPostHandler(values.postTextArea)
+    }
+
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div><textarea id='myPostField' value={props.newPostTitle}
-                               onChange={(event) =>
-                                   props.inputPostHandler(event)}></textarea></div>
-                <div>
-                    <button onClick={props.addPostHandler}>Add post</button>
-                </div>
+                <AddPostFormRedux onSubmit={addNewPost}/>
             </div>
             <div className={s.posts}>
                 {postsElements}
@@ -32,3 +31,4 @@ export const MyPosts = (props: MyPostsPropsType) => {
         </div>
     )
 }
+const AddPostFormRedux=reduxForm({form:'profileAddPostForm'})(AddPostForm)

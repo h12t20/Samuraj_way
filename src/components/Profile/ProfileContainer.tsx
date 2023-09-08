@@ -10,6 +10,7 @@ import {compose} from "redux";
 export type ProfilePropsType = {
     status: string,
     profileInfo: ProfileInfoType,
+    userId: number,
     getProfile: (userID: number) => void,
     getStatus: (userID: number) => void,
     updateStatus: (status:string) => void,
@@ -18,7 +19,8 @@ type RoutePropsType = RouteComponentProps<{ id: string }> & ProfilePropsType
 
 class ProfileContainer extends React.Component<RoutePropsType, { children?: ReactNode }> {
     componentDidMount() {
-        const id = !this.props.match.params.id ? '29483' : this.props.match.params.id
+        const id = !this.props.match.params.id ? this.props.userId? this.props.userId :
+            this.props.history.push('/login'): this.props.match.params.id
         this.props.getProfile(+id)
         this.props.getStatus(+id)
     }
@@ -31,6 +33,6 @@ class ProfileContainer extends React.Component<RoutePropsType, { children?: Reac
 }
 
 const mapStateToProps = (state: StateType) =>
-    ({profileInfo: state.profilePage.profileInfo, status:state.profilePage.status});
+    ({profileInfo: state.profilePage.profileInfo, status:state.profilePage.status, userId:state.auth.id});
 export default compose<React.ElementType>(connect(mapStateToProps, {getProfile, getStatus, updateStatus}),
     withRouter, withAuthRedirect)(ProfileContainer)

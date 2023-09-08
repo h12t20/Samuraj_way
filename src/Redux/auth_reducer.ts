@@ -1,6 +1,8 @@
 import {ActionType, AuthType} from "./redux_store";
 import {Dispatch} from "redux";
 import {authAPI} from "../api/authAPI";
+import {LoginFormType} from "../components/Login/Login";
+import {stopSubmit} from "redux-form";
 const initialState = {
     id: null,
     email: null,
@@ -12,7 +14,7 @@ export const auth_reducer = (state= initialState, action: ActionType) => {
         case 'SET_USER_DATA': {
             return ({
                 ...state,
-               ...action.data
+               ...action.payload
             })
         }
         case 'TOGGLE_AUTH_FETCHING': {
@@ -28,10 +30,10 @@ export const auth_reducer = (state= initialState, action: ActionType) => {
 export type SetUserDataType = ReturnType<typeof setAuthUserData>
 export type ToggleAuthFetchingType = ReturnType<typeof toggleAuthFetching>
 
-export const setAuthUserData = (data: AuthType) =>
+export const setAuthUserData = (payload: AuthType) =>
     ({
         type: 'SET_USER_DATA',
-        data
+        payload
     } as const)
 export const toggleAuthFetching = (isFetching:boolean) => (
         {
@@ -42,10 +44,37 @@ export const toggleAuthFetching = (isFetching:boolean) => (
 export const getAuth = ()=>{
     return (dispatch:Dispatch) => {
         toggleAuthFetching(true);
-        authAPI.auth()
+       return authAPI.auth() // return возвращает наружу санки промис
             .then((data)=> {
                 const {resultCode} = data;
                 if (resultCode===0) dispatch(setAuthUserData(data.data));
+            })
+            .finally(() => dispatch(toggleAuthFetching(false)))
+    }
+}
+export const login = (loginData: LoginFormType)=>{
+    return (dispatch:Dispatch) => {
+        toggleAuthFetching(true);
+        authAPI.login({...loginData})
+            .then((data)=> {
+                const {resultCode} = data;
+                if (resultCode===0) { // @ts-ignore
+                    dispatch(getAuth())
+                } else {
+                    dispatch(stopSubmit('login', {email:' ',
+                        password:data.messages}))
+                }
+            })
+            .finally(() => dispatch(toggleAuthFetching(false)))
+    }
+}
+export const logout = ()=>{
+    return (dispatch:Dispatch) => {
+        toggleAuthFetching(true);
+        authAPI.logout()
+            .then((data)=> {
+                const {resultCode} = data;
+                if (resultCode===0) dispatch(setAuthUserData(initialState));
             })
             .finally(() => dispatch(toggleAuthFetching(false)))
     }

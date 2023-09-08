@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer, SetStatusType} from "./profile_reducer";
-import {AddMessageACType, dialogs_reducer, InputMessageACType} from "./dialogs_reducer";
+import {AddMessageACType, dialogs_reducer} from "./dialogs_reducer";
 import {
     FollowACType,
     SetCurrentPageACType,
@@ -11,19 +11,23 @@ import {
     UserType
 } from "./users_reducer";
 import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
+import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware from 'redux-thunk'
+import {app_reducer, SetInitialized} from "./app_reducer";
 
 const reducers = combineReducers({
     profilePage: profile_reducer,
     messagesPage: dialogs_reducer,
     usersPage: users_reducer,
-    auth: auth_reducer
+    auth: auth_reducer,
+    form: formReducer,
+    app: app_reducer
 })
-export let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
-export type ActionType = InputPostACType | AddPostACType | InputMessageACType | AddMessageACType |
+export type ActionType = InputPostACType | AddPostACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
-    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType
+    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType | SetInitialized
 export type ProfileInfoType = {
     contacts: {
         facebook: string | null,
@@ -82,9 +86,15 @@ export type AuthType = {
     login: string | null,
     isFetching: boolean
 }
+export type AppStateType = {
+    initialized: false
+}
 export type StateType = {
     messagesPage: MessageType,
     profilePage: ProfileType,
     usersPage: UsersType,
-    auth : AuthType
+    auth : AuthType,
+    app: AppStateType
 }
+
+

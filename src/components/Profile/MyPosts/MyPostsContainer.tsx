@@ -1,7 +1,6 @@
-import {ChangeEvent} from "react";
 import {connect} from "react-redux";
 import {MyPosts} from "./MyPosts";
-import {addPost, inputPost} from "../../../Redux/profile_reducer";
+import {addPost} from "../../../Redux/profile_reducer";
 import {ActionType, StateType} from "../../../Redux/redux_store";
 const mapStateToProps=(state:StateType)=>({
     postData: state.profilePage.postsData,
@@ -10,10 +9,7 @@ const mapStateToProps=(state:StateType)=>({
 
 const mapDispatchToProps=(dispatch:(action:ActionType)=>void)=>{
     return {
-        inputPostHandler: (event:ChangeEvent<HTMLTextAreaElement>)=>{
-            dispatch(inputPost(event))
-        },
-        addPostHandler:()=>dispatch(addPost())
+        addPostHandler:(newPost:string)=>dispatch(addPost(newPost))
     }
 }
 export const MyPostsContainer=connect(mapStateToProps,mapDispatchToProps)(MyPosts)

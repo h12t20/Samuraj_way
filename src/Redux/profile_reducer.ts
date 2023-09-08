@@ -27,7 +27,6 @@ const initialState = {
         },
     ],
     profileInfo: null,
-    newPostTitle: '',
     status: ''
 }
 
@@ -42,13 +41,12 @@ export const profile_reducer = (state = initialState, action: ActionType) => {
         case 'ADD_POST': {
             let newPost = {
                 id: 5,
-                message: state.newPostTitle,
+                message: action.newPost,
                 likesCount: 0
             }
             return ({
                 ...state,
                 postsData: [...state.postsData, newPost],
-                newPostTitle: ''
             })
         }
         case 'SET_USER_PROFILE': {
@@ -76,7 +74,7 @@ export const inputPost = (e: ChangeEvent<HTMLTextAreaElement>) =>
         type: 'INPUT_POST',
         payload: e.currentTarget.value
     } as const)
-export const addPost = () => ({type: 'ADD_POST'} as const);
+export const addPost = (newPost:string) => ({type: 'ADD_POST', newPost} as const);
 export const setUserProfile = (profileInfo: ProfileInfoType) => ({
     type: 'SET_USER_PROFILE',
     profileInfo
