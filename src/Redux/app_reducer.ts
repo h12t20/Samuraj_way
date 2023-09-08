@@ -1,5 +1,4 @@
-import {ActionType} from "./redux_store";
-import {Dispatch} from "redux";
+import {ActionType, AppDispatch, AppThunk} from "./redux_store";
 import {getAuth} from "./auth_reducer";
 const initialState = {initialized:false}
 export const app_reducer = (state= initialState, action: ActionType) => {
@@ -20,8 +19,7 @@ export const setInitialized = () =>
     ({
         type: 'SET_INITIALIZED'
     } as const)
-export const initializeApp = ()=>(dispatch:Dispatch) => {
-        // @ts-ignore
+export const initializeApp = ():AppThunk =>(dispatch:AppDispatch) => {
     dispatch(getAuth()) // возвращает промис, потому что в этой санке есть return
         .then(()=>{dispatch(setInitialized())})
 }

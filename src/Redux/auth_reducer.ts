@@ -1,5 +1,4 @@
-import {ActionType, AuthType} from "./redux_store";
-import {Dispatch} from "redux";
+import {ActionType, AuthType, AppDispatch, AppThunk} from "./redux_store";
 import {authAPI} from "../api/authAPI";
 import {LoginFormType} from "../components/Login/Login";
 import {stopSubmit} from "redux-form";
@@ -41,8 +40,8 @@ export const toggleAuthFetching = (isFetching:boolean) => (
             isFetching
         } as const);
 
-export const getAuth = ()=>{
-    return (dispatch:Dispatch) => {
+export const getAuth = ():AppThunk< Promise<void> >=>{
+    return (dispatch:AppDispatch) => {
         toggleAuthFetching(true);
        return authAPI.auth() // return возвращает наружу санки промис
             .then((data)=> {
@@ -52,14 +51,14 @@ export const getAuth = ()=>{
             .finally(() => dispatch(toggleAuthFetching(false)))
     }
 }
-export const login = (loginData: LoginFormType)=>{
-    return (dispatch:Dispatch) => {
+export const login = (loginData: LoginFormType):AppThunk=>{
+    return (dispatch:AppDispatch) => {
         toggleAuthFetching(true);
         authAPI.login({...loginData})
             .then((data)=> {
                 const {resultCode} = data;
-                if (resultCode===0) { // @ts-ignore
-                    dispatch(getAuth())
+                if (resultCode===0) {
+                    dispatch(getAuth()).catch(()=>{throw new Error})
                 } else {
                     dispatch(stopSubmit('login', {email:' ',
                         password:data.messages}))
@@ -68,8 +67,8 @@ export const login = (loginData: LoginFormType)=>{
             .finally(() => dispatch(toggleAuthFetching(false)))
     }
 }
-export const logout = ()=>{
-    return (dispatch:Dispatch) => {
+export const logout = ():AppThunk=>{
+    return (dispatch:AppDispatch) => {
         toggleAuthFetching(true);
         authAPI.logout()
             .then((data)=> {

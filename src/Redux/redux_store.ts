@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
 import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer, SetStatusType} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer} from "./dialogs_reducer";
 import {
@@ -12,7 +12,7 @@ import {
 } from "./users_reducer";
 import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
 import { reducer as formReducer } from 'redux-form'
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {app_reducer, SetInitialized} from "./app_reducer";
 
 const reducers = combineReducers({
@@ -96,5 +96,8 @@ export type StateType = {
     auth : AuthType,
     app: AppStateType
 }
-
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState,
+    unknown, AnyAction>
 

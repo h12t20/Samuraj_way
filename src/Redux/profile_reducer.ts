@@ -1,6 +1,5 @@
 import {ChangeEvent} from "react";
-import {ActionType, ProfileInfoType} from "./redux_store";
-import {Dispatch} from "redux";
+import {ActionType, AppDispatch, AppThunk, ProfileInfoType} from "./redux_store";
 import {profileAPI} from "../api/profileAPI";
 
 const initialState = {
@@ -83,21 +82,21 @@ export const setStatus = (status: string) => ({
     type: 'SET_STATUS',
     status
 } as const)
-export const getProfile = (userId:number) => {
-    return (dispatch: Dispatch) => {
+export const getProfile = (userId:number):AppThunk => {
+    return (dispatch: AppDispatch) => {
         profileAPI.getProfile(userId)
             .then(res => {dispatch(setUserProfile(res))})
     }
 }
-export const getStatus = (userId:number) => {
-    return (dispatch: Dispatch) => {
+export const getStatus = (userId:number):AppThunk => {
+    return (dispatch: AppDispatch) => {
         profileAPI.getStatus(userId)
             .then(res => {
                 dispatch(setStatus(res))})
     }
 }
-export const updateStatus = (status:string) => {
-    return (dispatch: Dispatch) => {
+export const updateStatus = (status:string):AppThunk => {
+    return (dispatch: AppDispatch) => {
         profileAPI.updateStatus(status)
             .then(res => {
                 if (res.resultCode===0) dispatch(setStatus(status))})

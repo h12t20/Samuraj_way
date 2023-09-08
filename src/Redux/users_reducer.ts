@@ -1,6 +1,5 @@
-import {ActionType, UsersType} from "./redux_store";
+import {ActionType, AppDispatch, AppThunk, UsersType} from "./redux_store";
 import {usersAPI} from "../api/usersAPI";
-import {Dispatch} from "redux";
 import React from "react";
 import {followAPI} from "../api/followAPI";
 
@@ -96,8 +95,8 @@ export const toggleFetching = (isFetching: boolean) => (
         type: 'TOGGLE_FETCHING',
         isFetching
     } as const);
-export const getUsers = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch) => {
+export const getUsers = (currentPage: number, pageSize: number):AppThunk => {
+    return (dispatch: AppDispatch) => {
         dispatch(setCurrentPage(currentPage))
         dispatch(toggleFetching(true));
         usersAPI.getUsers(currentPage, pageSize)
@@ -108,8 +107,9 @@ export const getUsers = (currentPage: number, pageSize: number) => {
             .finally(() => dispatch(toggleFetching(false)))
     }
 }
-export const followUsers = (isFollow: boolean, userID: number, setDisableButton: React.Dispatch<React.SetStateAction<boolean>>) => {
-    return (dispatch:Dispatch) => {
+export const followUsers = (isFollow: boolean, userID: number, setDisableButton:
+    React.Dispatch<React.SetStateAction<boolean>>):AppThunk => {
+    return (dispatch:AppDispatch) => {
         setDisableButton(true);
         const promise = isFollow ? followAPI.follow(userID) : followAPI.unfollow(userID);
         promise.then(({resultCode}) => {
