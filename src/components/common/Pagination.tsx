@@ -39,7 +39,7 @@ export const Pagination = React.memo((props: UsersPropsType) => {
                 {curPage >5 && <span className={s.pagination} style={curPage === 1 ?
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(1)}}>1</span>}
                 {curPage>5 && <EditableSpan {...editableSpanProps} id='firstPagination'/>}
-                {pages.map(p => <span key={p} className={s.pagination} style={curPage === p ?
+                {pages.map(p => <span key={p} className={s.pagination} style={curPage === p?
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(p)}}>{p}</span>)}
                 {pagesCount>8 && curPage<pagesCount-3 && <EditableSpan {...editableSpanProps} id='secondPagination'/>}
                 {pagesCount>6 && curPage < pagesCount-2 && <span className={s.pagination} style={curPage === pagesCount ?

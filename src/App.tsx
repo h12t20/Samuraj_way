@@ -26,6 +26,7 @@ class App extends React.Component<{ initializeApp:()=>void, initApp:boolean }, {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
+                    <Route exact path='/'><ProfileContainer/></Route>
                     <Route path='/news'><News/></Route>
                     <Route path='/music'><Music/></Route>
                     <Route path='/profile/:id?'><ProfileContainer/></Route>

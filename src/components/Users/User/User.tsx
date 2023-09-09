@@ -9,7 +9,7 @@ export type UserPropsType = {
     u: UserType,
     followUsers: (isFollow: boolean, userID: number, setDisableButton: React.Dispatch<React.SetStateAction<boolean>>) => void
 }
-export const User = (props: UserPropsType) => {
+export const User = React.memo((props: UserPropsType) => {
     return (
         <div key={props.u.id}>
                     <span>
@@ -27,4 +27,4 @@ export const User = (props: UserPropsType) => {
                 <div>{props.u.status}</div>
             </span>
         </div>)
-}
+})
