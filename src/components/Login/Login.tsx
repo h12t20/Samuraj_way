@@ -20,11 +20,11 @@ export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field autoComplete='on' placeholder={'E-mail'} name={'email'} component={Input}
+                <Field autoComplete={'on'} placeholder={'E-mail'} name={'email'} component={Input}
                        validate={[required, maxLength50, emailValid]}/>
             </div>
             <div>
-                <Field autoComplete='on' placeholder={'Password'} type='password' name={'password'} component={Input}
+                <Field autoComplete={'on'} placeholder={'Password'} type='password' name={'password'} component={Input}
                        validate={[minLength4, maxLength50]}/>
             </div>
             <div>
@@ -38,7 +38,10 @@ export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
     )
 }
 const LoginReduxForm = reduxForm<LoginFormType>({form: 'login'})(LoginForm)
-const Login = (props: {login:(formData: LoginFormType)=>void, isAuth?:string | null }) => {
+const Login = (props: {
+    login: (formData: LoginFormType) => void,
+    isAuth?: string | null
+}) => {
     const onSubmit = (formData: LoginFormType) => {
         props.login(formData)
     }
@@ -49,6 +52,6 @@ const Login = (props: {login:(formData: LoginFormType)=>void, isAuth?:string | n
         </div>
     )
 }
-const mstP=(state:StateType)=>({isAuth:state.auth.login})
+const mstP = (state: StateType) => ({isAuth: state.auth.login})
 export default connect(mstP, {login})(Login)
 

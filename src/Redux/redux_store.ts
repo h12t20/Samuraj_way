@@ -1,5 +1,12 @@
 import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
-import {AddPostACType, InputPostACType, SetUserProfileType, profile_reducer, SetStatusType} from "./profile_reducer";
+import {
+    AddPostACType,
+    InputPostACType,
+    SetUserProfileType,
+    profile_reducer,
+    SetStatusType,
+    DeletePostACType
+} from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer} from "./dialogs_reducer";
 import {
     FollowACType,
@@ -27,7 +34,7 @@ export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export type ActionType = InputPostACType | AddPostACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
-    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType | SetInitialized
+    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType | SetInitialized | DeletePostACType
 export type ProfileInfoType = {
     contacts: {
         facebook: string | null,

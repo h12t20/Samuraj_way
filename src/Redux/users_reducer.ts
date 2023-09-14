@@ -95,28 +95,33 @@ export const toggleFetching = (isFetching: boolean) => (
         type: 'TOGGLE_FETCHING',
         isFetching
     } as const);
-export const getUsers = (currentPage: number, pageSize: number):AppThunk => {
-    return (dispatch: AppDispatch) => {
+export const getUsers = (currentPage: number, pageSize: number): AppThunk => async (dispatch: AppDispatch) => {
+    try {
         dispatch(setCurrentPage(currentPage))
         dispatch(toggleFetching(true));
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setUser(data.items));
-                dispatch(setTotalUsersCount(data.totalCount))
-            })
-            .finally(() => dispatch(toggleFetching(false)))
+        const data = await usersAPI.getUsers(currentPage, pageSize);
+        dispatch(setUser(data.items));
+        dispatch(setTotalUsersCount(data.totalCount))
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(toggleFetching(false))
     }
 }
+
 export const followUsers = (isFollow: boolean, userID: number, setDisableButton:
-    React.Dispatch<React.SetStateAction<boolean>>):AppThunk => {
-    return (dispatch:AppDispatch) => {
+    React.Dispatch<React.SetStateAction<boolean>>): AppThunk => async (dispatch: AppDispatch) => {
+    try {
         setDisableButton(true);
-        const promise = isFollow ? followAPI.follow(userID) : followAPI.unfollow(userID);
-        promise.then(({resultCode}) => {
-            if (resultCode === 0) {
-                setDisableButton(false);
-                dispatch(follow(userID))
-            }
-        })
+        dispatch(toggleFetching(true));
+        const res:{resultCode:number} = isFollow ? await followAPI.follow(userID) : await followAPI.unfollow(userID);
+        if (res.resultCode === 0) {
+            setDisableButton(false);
+            dispatch(follow(userID))
+        }
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(toggleFetching(false))
     }
 }

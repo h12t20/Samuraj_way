@@ -11,12 +11,13 @@ type MyPostsPropsType = {
     newPostTitle:string,
     addPostHandler: (newPost:string) => void
 }
-export const MyPosts = (props: MyPostsPropsType) => {
+
+export const MyPosts=React.memo((props: MyPostsPropsType)=> {
     let postsElements = props.postData.map(post =>
         <Post key={post.id} message={post.message}
               likesCount={post.likesCount}/>)
-    const addNewPost=(values:any)=>{
-props.addPostHandler(values.postTextArea)
+    const addNewPost = (values: any) => {
+        props.addPostHandler(values.postTextArea)
     }
 
     return (
@@ -30,5 +31,6 @@ props.addPostHandler(values.postTextArea)
             </div>
         </div>
     )
-}
+})
+
 const AddPostFormRedux=reduxForm({form:'profileAddPostForm'})(AddPostForm)

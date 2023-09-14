@@ -20,6 +20,6 @@ export const setInitialized = () =>
         type: 'SET_INITIALIZED'
     } as const)
 export const initializeApp = ():AppThunk =>(dispatch:AppDispatch) => {
-    dispatch(getAuth()) // возвращает промис, потому что в этой санке есть return
+    dispatch(getAuth())
         .then(()=>{dispatch(setInitialized())})
 }
