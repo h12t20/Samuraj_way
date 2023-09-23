@@ -1,4 +1,4 @@
-import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {
     AddPostACType,
     InputPostACType,
@@ -21,6 +21,7 @@ import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_redu
 import { reducer as formReducer } from 'redux-form'
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {app_reducer, SetInitialized} from "./app_reducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const reducers = combineReducers({
     profilePage: profile_reducer,
@@ -30,7 +31,8 @@ const reducers = combineReducers({
     form: formReducer,
     app: app_reducer
 })
-export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+export const store = createStore(reducers, composeWithDevTools({trace: true, traceLimit: 25})(applyMiddleware(thunkMiddleware)))
+
 
 export type ActionType = InputPostACType | AddPostACType | AddMessageACType |
     FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |

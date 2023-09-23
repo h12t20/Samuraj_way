@@ -18,7 +18,6 @@ export const Users = React.memo((props: UsersPropsType) => {
     useEffect(() => {
         if (page) props.onPageChanged(+page)
     }, [page]);
-   /* console.log(page)*/
     return (
         <div className={s.container}>
             <Pagination usersPage={props.usersPage} onPageChanged={props.onPageChanged}/>

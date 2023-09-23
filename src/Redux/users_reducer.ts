@@ -26,7 +26,7 @@ export const initialState = {
 
 export const users_reducer = (state: UsersType = initialState, action: ActionType) => {
     switch (action.type) {
-        case 'FOLLOW': {
+        case 'USERS/FOLLOW': {
             return ({
                 ...state,
                 userData: state.userData.map(user => user.id === action.userID ?
@@ -36,25 +36,25 @@ export const users_reducer = (state: UsersType = initialState, action: ActionTyp
                     } : user)
             })
         }
-        case 'SET_USER': {
+        case 'USERS/SET_USER': {
             return ({
                 ...state,
                 userData: [...action.user]
             })
         }
-        case 'SET_CURRENT_PAGE': {
+        case 'USERS/SET_CURRENT_PAGE': {
             return ({
                 ...state,
                 currentPage: action.currentPage
             })
         }
-        case 'SET_TOTAL_USERS': {
+        case 'USERS/SET_TOTAL_USERS': {
             return ({
                 ...state,
                 totalCount: action.totalUsers
             })
         }
-        case 'TOGGLE_FETCHING': {
+        case 'USERS/TOGGLE_FETCHING': {
             return ({
                 ...state,
                 isFetching: action.isFetching
@@ -72,27 +72,27 @@ export type toggleFetchingACType = ReturnType<typeof toggleFetching>
 
 export const follow = (userID: number) =>
     ({
-        type: 'FOLLOW',
+        type: 'USERS/FOLLOW',
         userID
     } as const);
 export const setUser = (user: UserType[]) => (
     {
-        type: 'SET_USER',
+        type: 'USERS/SET_USER',
         user
     } as const);
 export const setCurrentPage = (currentPage: number) => (
     {
-        type: 'SET_CURRENT_PAGE',
+        type: 'USERS/SET_CURRENT_PAGE',
         currentPage
     } as const);
 export const setTotalUsersCount = (totalUsers: number) => (
     {
-        type: 'SET_TOTAL_USERS',
+        type: 'USERS/SET_TOTAL_USERS',
         totalUsers
     } as const);
 export const toggleFetching = (isFetching: boolean) => (
     {
-        type: 'TOGGLE_FETCHING',
+        type: 'USERS/TOGGLE_FETCHING',
         isFetching
     } as const);
 export const getUsers = (currentPage: number, pageSize: number): AppThunk => async (dispatch: AppDispatch) => {

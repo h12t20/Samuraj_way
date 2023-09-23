@@ -3,7 +3,7 @@ import {getAuth} from "./auth_reducer";
 const initialState = {initialized:false}
 export const app_reducer = (state= initialState, action: ActionType) => {
     switch (action.type) {
-        case 'SET_INITIALIZED': {
+        case 'APP/SET_INITIALIZED': {
             return ({
                 ...state,
                initialized: true
@@ -17,7 +17,7 @@ export type SetInitialized = ReturnType<typeof setInitialized>
 
 export const setInitialized = () =>
     ({
-        type: 'SET_INITIALIZED'
+        type: 'APP/SET_INITIALIZED'
     } as const)
 export const initializeApp = ():AppThunk =>(dispatch:AppDispatch) => {
     dispatch(getAuth())
