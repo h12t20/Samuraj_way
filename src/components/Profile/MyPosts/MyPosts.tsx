@@ -19,7 +19,6 @@ export const MyPosts=React.memo((props: MyPostsPropsType)=> {
     const addNewPost = (values: any) => {
         props.addPostHandler(values.postTextArea)
     }
-
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>

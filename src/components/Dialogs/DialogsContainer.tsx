@@ -7,7 +7,6 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 const mapStateToProps = (state: StateType) => ({messagesPage: state.messagesPage})
-
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => ({
         addMessageHandler: (newMessage:string) => dispatch(addMessageAC(newMessage))
     })

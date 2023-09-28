@@ -24,14 +24,12 @@ class ProfileContainer extends React.Component<RoutePropsType, { children?: Reac
         this.props.getProfile(+id)
         this.props.getStatus(+id)
     }
-
     render() {
         return (
             <Profile profileInfo={this.props.profileInfo} status={this.props.status} updateStatus={this.props.updateStatus}/>
         )
     }
 }
-
 const mapStateToProps = (state: StateType) =>
     ({profileInfo: state.profilePage.profileInfo, status:state.profilePage.status, userId:state.auth.id});
 export default compose<React.ElementType>(connect(mapStateToProps, {getProfile, getStatus, updateStatus}),

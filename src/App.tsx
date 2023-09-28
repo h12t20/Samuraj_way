@@ -14,10 +14,8 @@ import {Preloader} from "./components/common/Preloader";
 import {lazily} from "react-lazily";
 
 const {DialogsContainer} = lazily(() => import("./components/Dialogs/DialogsContainer"));
-
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer")
     .then((ProfileContainer) => ProfileContainer as { default: ComponentType<any> }));
-
 const UsersContainer = lazy(() => import("./components/Users/UsersContainer")
     .then((UsersContainer) => UsersContainer as { default: ComponentType<any> }));
 class App extends React.Component<{
@@ -29,13 +27,10 @@ class App extends React.Component<{
     componentDidMount() {
         this.props.initializeApp()
     }
-
     render() {
         if (!this.props.initApp) {
             return <Preloader/>
         }
-        // @ts-ignore
-        // @ts-ignore
         return (
             <div className='app-wrapper'>
                 <HeaderContainer/>
@@ -56,6 +51,5 @@ class App extends React.Component<{
         )
     }
 }
-
 const mapStateToProps = (state: StateType) => ({initApp: state.app.initialized});
 export default connect(mapStateToProps, {initializeApp})(App)
