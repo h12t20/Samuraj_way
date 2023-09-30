@@ -3,9 +3,11 @@
     padding: 5px 5px;
     height:50px;
     width: 50px;
-    border: 1px gray solid;
+    border: 1px #3498db solid;
     cursor: pointer;
-    margin: 1px 1px 1px 1px
+    margin: 1px 1px 1px 1px;
+    color: #3498db;
+    background-color: white;
 
 }
 
@@ -16,6 +18,6 @@
     height: 25px;
     border: 1px gray solid;
     cursor: pointer;
-
+    color: #3498db;
 
 }

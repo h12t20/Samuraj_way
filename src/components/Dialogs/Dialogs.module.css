@@ -1,18 +1,31 @@
 .dialogs {
     display: grid;
     justify-content: center;
-    width: 60%;
     grid-template-columns: 2fr 10fr;
     color: seagreen;
 }
+
 .dialogsItems {
-padding: 10px;
+    width: 160px;
+    background-color: white;
+
+
 }
+
 .dialogsItems .active {
     text-decoration: none;
     color: lightslategray;
 }
-.messages {
 
+.messages {
+    background-color: #ecf0f1;
     padding: 10px;
+}
+.messagesElements {
+    margin: 20px 30px;
+    border-radius: 15px;
+    background-color: white;
+}
+.addMessage {
+    margin: 20px 30px;
 }

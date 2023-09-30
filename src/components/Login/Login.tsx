@@ -21,15 +21,15 @@ export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field autoComplete={'on'} placeholder={'E-mail'} name={'email'} component={Input}
-                       validate={[required, maxLength50, emailValid]}/>
+                       validate={[required, maxLength50, emailValid]} className={s.field}/>
             </div>
             <div>
                 <Field autoComplete={'on'} placeholder={'Password'} type='password' name={'password'} component={Input}
-                       validate={[minLength4, maxLength50]}/>
+                       validate={[minLength4, maxLength50]} className={s.field}/>
             </div>
-            <div>
-                <Field type={'checkbox'} name={'rememberMe'} component={Input}/>
-                remember me
+            <div className={s.rememberMe}>
+                <Field type={'checkbox'} name={'rememberMe'} component={Input} />
+                <div>remember me</div>
             </div>
             <div>
                 <button>Login</button>
@@ -47,8 +47,10 @@ const Login = (props: {
     }
     if (props.isAuth) return <Redirect to={'/profile'}/>
     return (
-        <div><h1 className={s.login}>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+        <div className={s.container}>
+            <div className={s.login}><h1>Login</h1>
+                <LoginReduxForm onSubmit={onSubmit}/>
+            </div>
         </div>
     )
 }

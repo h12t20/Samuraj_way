@@ -1,17 +1,40 @@
 
-
 .me {
     display: flex;
-color: darkslategrey;
-justify-content: start;
+    color: #3498db;
+    justify-content: flex-start;
+    align-items: center;
     margin-right: 50px;
-    margin-top: 10px;
+    gap: 15px;
 
 }
+
 .you {
     display: flex;
-    color: darkslategrey;
-    justify-content: end;
+    color: #3498db;
+    justify-content: flex-end;
+    align-items: center;
     margin-left: 50px;
-    margin-top: 10px;
+    gap: 15px
+}
+
+.author {
+    background-color: #ecf0f1;
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(33, 33, 33);
+    font-size: 13px;
+    line-height: 20px
+}
+img {
+    height: 40px;
+    width: 40px;
 }

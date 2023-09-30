@@ -6,7 +6,6 @@ const mapStateToProps=(state:StateType)=>({
     postData: state.profilePage.postsData,
     newPostTitle: state.profilePage.newPostTitle,
     })
-
 const mapDispatchToProps=(dispatch:(action:ActionType)=>void)=>{
     return {
         addPostHandler:(newPost:string)=>dispatch(addPost(newPost))

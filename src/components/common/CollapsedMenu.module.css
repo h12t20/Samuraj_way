@@ -1,0 +1,22 @@
+
+.menu {
+
+}
+
+.item {
+    padding: 10px 10px;
+    position: relative;
+    color: rgb(33, 33, 33);
+    background-color: white;
+    height: 20px;
+    width: 70px;
+}
+
+.item:hover {
+    color: white;
+    background-color: #3498db;
+}
+
+.label {
+
+}

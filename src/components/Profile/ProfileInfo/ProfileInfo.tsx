@@ -13,13 +13,11 @@ export const ProfileInfo = (props: ProfileInfoProType) => {
     if (!props.profileInfo) return <Preloader/>
    return (
         <div>
-            <div>
-            </div>
             <div className={s.descriptionBlock}>
                 <img className={s.ava} src={props.profileInfo.photos.large ? props.profileInfo.photos.large :
                     props.profileInfo.photos.small ? props.profileInfo.photos.small: user}
                      alt='photo'/>
-                <div>{props.profileInfo.fullName}</div>
+                <div className={s.name}>{props.profileInfo.fullName}</div>
                 <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
 
             </div>

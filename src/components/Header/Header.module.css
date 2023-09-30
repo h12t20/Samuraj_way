@@ -1,24 +1,79 @@
 .header {
     grid-area: h;
-    background-color: lightseagreen;
+    background-color: #ffffff;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
 }
+
 .header img {
     width: 120px;
 }
+
 .loginBlock {
     margin-right: 20px;
     text-decoration: none;
-    color: white;
+    color: rgb(176, 196, 212);
 }
+
 .loginBlock a {
     text-decoration: none;
-    color: white;
+    color: rgb(33, 33, 33);
     font-size: 20px;
 }
-.logout:hover{
+
+.logout {
+    min-width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.logout:hover {
     cursor: pointer;
 }
+
+.logo {
+    display: flex;
+    align-items: center;
+    background-color: #3498db;
+    color: #ffffff;
+    padding-left: 45px;
+    padding-right: 15px;
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+img {
+    height: 70%;
+}
+
+.ava {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.login {
+    min-width: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+.loginLabel {
+    margin-top: 15px;
+    font-size: 18px;
+    color: rgb(176, 196, 212);
+    cursor: pointer;
+}
+.loginLabel:hover {
+   color: rgb(33, 33, 33);
+}
+

@@ -1,6 +1,19 @@
 .postsBlock {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 15px;
+    margin: 40px 70px 40px 40px;
+    width: 50vh;
+    padding-left: 45px;
+    padding-bottom: 30px;
 }
 .posts {
+
     margin-top: 10px;
+}
+h3 {
+    color: rgb(176, 196, 212);
 }

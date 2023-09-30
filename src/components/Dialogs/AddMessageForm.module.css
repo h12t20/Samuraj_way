@@ -1,0 +1,20 @@
+.button {
+    border-color: #3498db;
+    background-color: #3498db;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
+    height: 38px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+}
+.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+}
+.input {
+    border-color: white;
+    min-width: 630px;
+}

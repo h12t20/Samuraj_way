@@ -1,16 +1,32 @@
 
-
 .dialog .active {
 
 }
+
 .dialog {
-text-decoration: none;
-    color: navy;
-    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: rgb(33, 33, 33);
+    border-bottom: 1px #ecf0f1 solid;
+    height: 70px;
+}
+.dialog:hover{
+    background-color: whitesmoke;
 }
 
 .active {
     text-decoration: none;
-color: lightslategray;
-    margin-top: 5px;
+    color:rgb(176, 196, 212);
+
+}
+img {
+    height: 40px;
+    width: 40px;
+    margin-right: 5px;
+    padding-left: 10px;
 }

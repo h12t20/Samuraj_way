@@ -46,10 +46,10 @@ export const Pagination = React.memo((props: UsersPropsType) => {
                     {fontWeight: "bold"} : {}} onClick={() => {props.onPageChanged(pagesCount)}}>{pagesCount}</span>}
                 {pagesCount > 10 && curPage > 1 && <span className={s.pagination} onClick={() => {
                     props.onPageChanged(curPage >1 ? curPage - 1 : pagesCount)
-                }}>{(String.fromCharCode(60)).repeat(2)} назад</span>}
+                }}>{'\<<'} </span>}
                 {pagesCount > 10 && curPage!== pagesCount && <span className={s.pagination} onClick={() => {
                     props.onPageChanged(curPage < pagesCount ? curPage + 1 : pagesCount)
-                }}>вперёд {(String.fromCharCode(62)).repeat(2)}</span>}
+                }}>{'\>>'}</span>}
             </div>
         </div>
     )

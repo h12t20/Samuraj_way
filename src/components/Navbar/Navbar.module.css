@@ -1,15 +1,48 @@
 .nav {
-    grid-area: n;
-    background-color: lightseagreen;
-    color: white;
-    font-size: 24px;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    transition: 0.5s;
+    text-align: left;
+    background-color: rgb(51, 74, 92);
+    padding-top: 40px;
 }
 .item a {
-    color:white;
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(176, 196, 212);
+    cursor: pointer;
+    display: block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding-left: 16px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    list-style: none outside none;
+    text-align: left;
+    text-decoration-color: rgb(255, 255, 255);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-decoration-thickness: auto;
+    visibility: visible;
+    width: 199px;
+    border-bottom: 1px rgb(51, 74, 92) solid;
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.nav a:hover{
+    width: 100%;
+    background-color:rgb(36, 53, 66);
     text-decoration: none;
+    color: rgb(255, 255, 255);
 }
 .item a.active {
-    color: gold;
-    text-decoration: none;
+
+
+    color: rgb(255, 255, 255);
+    text-decoration-color: rgb(255, 255, 255);
+    background-color: #3498db;
 }
