@@ -20,12 +20,12 @@ export const Header = (props: {
         {
             id: 1,
             value: 'Profile',
-            action: () => history.push('/profile')
+            action: () => {if (history.location.pathname!=='/profile') {history.push('/profile')}}
         },
         {
             id: 2,
             value: 'Setting',
-            action: () => history.push('/setting')
+            action: () => {if (history.location.pathname!=='/settings') {history.push('/settings')}}
         },
         {
             id: 3,

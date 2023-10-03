@@ -2,8 +2,9 @@ import s from './FormsControls.module.css'
 export const Textarea = ({input,meta,...restProps}:any) =>{
     return(<FormControl children={<textarea {...input} {...restProps} />} meta={meta}/>)}
 
-export const Input = ({input,meta,...restProps}:any) =>{
+export const Input = ({input,meta, ...restProps}:any) =>{
     return(<FormControl children={<input {...input} {...restProps}/>} meta={meta}/>)}
+
 export const FormControl = ({meta: {touched, error}, children}:any) =>{
     const hasError= touched && error
     return (

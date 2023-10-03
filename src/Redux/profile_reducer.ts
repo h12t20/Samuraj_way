@@ -1,8 +1,8 @@
 import {ChangeEvent} from "react";
-import {ActionType, AppDispatch, AppThunk, ProfileInfoType} from "./redux_store";
+import {ActionType, AppDispatch, AppThunk, ProfileInfoType, RootState} from "./redux_store";
 import {profileAPI} from "../api/profileAPI";
 import {toggleAuthFetching} from "./auth_reducer";
-
+import {stopSubmit} from "redux-form";
 export const initialState = {
     postsData: [
         {
@@ -25,9 +25,16 @@ export const initialState = {
             message: 'Really?!',
             likesCount: 40
         },
+        {
+            id: 5,
+            message: 'Yo!!!',
+            likesCount: 20
+        },
     ],
     profileInfo: null,
-    status: ''
+    status: '',
+    profileEditMode: false,
+    isFormSubmitSuccess: false
 }
 
 export const profile_reducer = (state = initialState, action: ActionType) => {
@@ -66,6 +73,25 @@ export const profile_reducer = (state = initialState, action: ActionType) => {
                 ...state,
                 status: action.status
             })
+
+        }
+        case 'PROFILE/SET_PHOTO': {
+            const profile = state.profileInfo? state.profileInfo: {}
+            return {
+                ...state,
+                profileInfo: {...profile, photos: action.photos}
+            }
+
+        }
+        case 'PROFILE/SET_EDIT_MODE': {
+            return {
+               ...state, profileEditMode:action.mode
+            }
+        }
+        case 'PROFILE/SET_FORM_SUBMIT_SUCCESS': {
+            return {
+                ...state, isFormSubmitSuccess:action.status
+            }
         }
         default:
             return state
@@ -76,6 +102,9 @@ export type AddPostACType = ReturnType<typeof addPost>
 export type DeletePostACType = ReturnType<typeof deletePost>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
 export type SetStatusType = ReturnType<typeof setStatus>
+export type SavePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
+export type SetProfileEditModeType = ReturnType<typeof setProfileEditMode>
+export type SetFormSubmitStatusType = ReturnType<typeof setFormSubmitStatus>
 export const inputPost = (e: ChangeEvent<HTMLTextAreaElement>) =>
     ({
         type: 'PROFILE/INPUT_POST',
@@ -95,6 +124,18 @@ export const setUserProfile = (profileInfo: ProfileInfoType) => ({
 } as const)
 export const setStatus = (status: string) => ({
     type: 'PROFILE/SET_STATUS',
+    status
+} as const)
+export const savePhotoSuccess = (photos: {large: string | null, small:string | null}) => ({
+    type: 'PROFILE/SET_PHOTO',
+    photos
+} as const)
+export const setProfileEditMode = (mode: boolean) => ({
+    type: 'PROFILE/SET_EDIT_MODE',
+    mode
+} as const)
+export const setFormSubmitStatus = (status: boolean) => ({
+    type: 'PROFILE/SET_FORM_SUBMIT_SUCCESS',
     status
 } as const)
 export const getProfile = (userId: number): AppThunk => async (dispatch: AppDispatch) => {
@@ -127,6 +168,45 @@ export const updateStatus = (status: string): AppThunk => async (dispatch: AppDi
         dispatch(toggleAuthFetching(true));
         const res: { resultCode: number } = await profileAPI.updateStatus(status)
         if (res.resultCode === 0) dispatch(setStatus(status))
+    } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(toggleAuthFetching(false))
+    }
+}
+export const updateProfile = (formData: ProfileInfoType):AppThunk=> async (dispatch: AppDispatch, getState:()=>RootState) => {
+try {
+        dispatch(toggleAuthFetching(true));
+        const res: { resultCode: number, messages: string[] } = await profileAPI.updateProfile(formData)
+        if (res.resultCode === 0) {
+            dispatch(setFormSubmitStatus(true))
+            // @ts-ignore
+            dispatch(getProfile(getState().auth.id))
+        } else {
+            dispatch(setFormSubmitStatus(false))
+            dispatch(stopSubmit('profile',
+                res.messages[0].toLowerCase().includes('name')? {fullName: res.messages}:
+                        res.messages[0].toLowerCase().includes('job')? {lookingForAJobDescription: res.messages}:
+                            res.messages[0].toLowerCase().includes('facebook')? {'contacts': {'facebook': res.messages}}:
+                                res.messages[0].toLowerCase().includes('vk')? {'contacts': {'vk': res.messages}}:
+                                    res.messages[0].toLowerCase().includes('website')? {'contacts': {'website': res.messages}}:
+                                    res.messages[0].toLowerCase().includes('twitter')? {'contacts': {'twitter': res.messages}}:
+                                        res.messages[0].toLowerCase().includes('instagram')? {'contacts': {'instagram': res.messages}}:
+                                            res.messages[0].toLowerCase().includes('youtube')? {'contacts': {'youtube': res.messages}}:
+                                                res.messages[0].toLowerCase().includes('github')? {'contacts': {'github': res.messages}}:undefined))}
+
+   } catch (error) {
+        console.log(error)
+    } finally {
+        dispatch(toggleAuthFetching(false))
+    }
+}
+export const savePhoto = (file: File): AppThunk => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(toggleAuthFetching(true));
+        const res: { resultCode: number, data: {photos:{large: string | null, small:string | null}} } = await profileAPI.savePhoto(file)
+        console.log(res)
+        if (res.resultCode === 0) dispatch(savePhotoSuccess(res.data.photos))
     } catch (error) {
         console.log(error)
     } finally {

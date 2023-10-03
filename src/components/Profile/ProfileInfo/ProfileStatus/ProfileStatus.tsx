@@ -10,9 +10,9 @@ export const ProfileStatus = React.memo((props:ProfileStatusPropsType) => {
     const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, inputTitle: string) => {
         if (e.key === 'Enter' && inputTitle.length < 300) props.updateStatus(inputTitle)}
     return (
-        <div >
+        <div>Status:
             <EditableSpan className={s} defaultInputTitleValue={props.status? props.status:''}
-                          verificationRule={value => value.length<=300}
+                          verificationRule={value => value.length<=200}
                           labelText={props.status? props.status: 'no status'}
                           onKeyPress={onKeyPress} id='profileStatus'/>
         </div>

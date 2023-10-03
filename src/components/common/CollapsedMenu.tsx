@@ -16,7 +16,7 @@ export const CollapsedMenu = (props: collapsedMenuPropsType) => {
         <div className={s.menu} onMouseLeave={()=>setCollapsed(false)}>
             <div className={s.label} onClick={props.label ? () => {setCollapsed(!collapsed)} : undefined}>{props.label}</div>
             {collapsed && props.label &&
-                props.menu.map(el => <div className={s.item} onClick={el.action}>{el.value}</div>)
+                props.menu.map(el => <div key = {el.id} className={s.item} onClick={el.action}>{el.value}</div>)
             }
         </div>
     )

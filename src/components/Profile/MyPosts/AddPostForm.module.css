@@ -1,11 +1,16 @@
-.button {
+.button:hover {
     border-color: #3498db;
     background-color: #3498db;
+    color: white;
+}
+.button {
+    border-color: #ecf0f1;
     border-bottom-left-radius: 7px;
     border-top-left-radius: 7px;
     height: 38px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: white;
+    color:rgb(176, 196, 212);
+
 }
 .form {
     display: flex;

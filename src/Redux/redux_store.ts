@@ -1,11 +1,11 @@
-import {AnyAction, applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
 import {
     AddPostACType,
     InputPostACType,
     SetUserProfileType,
     profile_reducer,
     SetStatusType,
-    DeletePostACType
+    DeletePostACType, SavePhotoSuccessType, SetProfileEditModeType, SetFormSubmitStatusType
 } from "./profile_reducer";
 import {AddMessageACType, dialogs_reducer} from "./dialogs_reducer";
 import {
@@ -18,10 +18,10 @@ import {
     UserType
 } from "./users_reducer";
 import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
-import { reducer as formReducer } from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {app_reducer, SetInitialized} from "./app_reducer";
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 const reducers = combineReducers({
     profilePage: profile_reducer,
@@ -33,12 +33,27 @@ const reducers = combineReducers({
 })
 export const store = createStore(reducers, composeWithDevTools({trace: true, traceLimit: 25})(applyMiddleware(thunkMiddleware)))
 
-
-export type ActionType = InputPostACType | AddPostACType | AddMessageACType |
-    FollowACType | SetUserACType | SetCurrentPageACType | setTotalUsersCountACType | toggleFetchingACType |
-    SetUserProfileType | SetUserDataType | ToggleAuthFetchingType | SetStatusType | SetInitialized | DeletePostACType
-export type ProfileInfoType = {
-    contacts: {
+export type ActionType =
+    InputPostACType
+    | AddPostACType
+    | AddMessageACType
+    |
+    FollowACType
+    | SetUserACType
+    | SetCurrentPageACType
+    | setTotalUsersCountACType
+    | toggleFetchingACType
+    |
+    SetUserProfileType
+    | SetUserDataType
+    | ToggleAuthFetchingType
+    | SetStatusType
+    | SetInitialized
+    | DeletePostACType
+    | SavePhotoSuccessType
+| SetProfileEditModeType
+|SetFormSubmitStatusType
+export type ContactType = {
         facebook: string | null,
         website: string | null,
         vk: string | null,
@@ -47,7 +62,9 @@ export type ProfileInfoType = {
         youtube: string | null,
         github: string | null,
         mainLink: string | null
-    },
+}
+export type ProfileInfoType = {
+    contacts: ContactType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
@@ -55,18 +72,21 @@ export type ProfileInfoType = {
     photos: {
         small: string | null,
         large: string | null
-    }
+    },
+    aboutMe: string
 }
 export type PostDataType = {
-        id: number;
-        message: string;
-        likesCount: number;
+    id: number;
+    message: string;
+    likesCount: number;
 }
 export type ProfileType = {
     postsData: PostDataType[],
     profileInfo: ProfileInfoType,
     newPostTitle: string,
-    status: string
+    status: string,
+    profileEditMode:boolean,
+    isFormSubmitSuccess: boolean
 };
 export type MessageType = {
     dialogsData:
@@ -84,10 +104,10 @@ export type MessageType = {
 }
 export type UsersType = {
     userData: UserType[],
-    pageSize:number,
-    totalCount:number,
-    currentPage:number,
-    isFetching:boolean,
+    pageSize: number,
+    totalCount: number,
+    currentPage: number,
+    isFetching: boolean,
 }
 export type AuthType = {
     id: number | null,
@@ -102,7 +122,7 @@ export type StateType = {
     messagesPage: MessageType,
     profilePage: ProfileType,
     usersPage: UsersType,
-    auth : AuthType,
+    auth: AuthType,
     app: AppStateType
 }
 export type RootState = ReturnType<typeof store.getState>

@@ -13,10 +13,12 @@ export type LoginFormType = {
     password: string
     rememberMe: boolean
 }
-const maxLength50 = maxLengthCreator(50)
-const minLength4 = minLengthCreator(4)
+export const maxLength50 = maxLengthCreator(50)
+export const maxLength200 = maxLengthCreator(200)
+export const minLength4 = minLengthCreator(4)
 
 export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
+    console.log(props)
     return (
         <form onSubmit={props.handleSubmit}>
             <div>

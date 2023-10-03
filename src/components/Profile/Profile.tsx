@@ -5,14 +5,21 @@ import {ProfileInfoType} from "../../Redux/redux_store";
 import s from './Profile.module.css'
 
 type ProfileType = {
+    isOwner:boolean
     profileInfo: ProfileInfoType,
     status: string,
-    updateStatus: (status: string) => void
+    updateStatus: (status: string) => void,
+    savePhoto: (file: File)=>void,
+    profileEditMode: boolean,
+    setProfileEditMode: (mode:boolean)=>void,
+    isFormSubmitSuccess: boolean
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div className={s.profile}>
-            <ProfileInfo profileInfo={props.profileInfo} status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileInfo savePhoto={props.savePhoto} isOwner = {props.isOwner} profileInfo={props.profileInfo}
+                         status={props.status} updateStatus={props.updateStatus} profileEditMode={props.profileEditMode}
+                         setProfileEditMode={props.setProfileEditMode} isFormSubmitSuccess = {props.isFormSubmitSuccess}/>
             <MyPostsContainer/>
         </div>
     )
