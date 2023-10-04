@@ -3,6 +3,7 @@ import {ActionType, AppDispatch, AppThunk, ProfileInfoType, RootState} from "./r
 import {profileAPI} from "../api/profileAPI";
 import {toggleAuthFetching} from "./auth_reducer";
 import {stopSubmit} from "redux-form";
+import {globalErrorHandler} from "./app_reducer";
 export const initialState = {
     postsData: [
         {
@@ -146,7 +147,7 @@ export const getProfile = (userId: number): AppThunk => async (dispatch: AppDisp
             dispatch(setUserProfile(res))
         }
     } catch (error) {
-        console.log(error)
+        dispatch(globalErrorHandler(error))
     } finally {
         dispatch(toggleAuthFetching(false))
     }
@@ -158,7 +159,7 @@ export const getStatus = (userId: number): AppThunk => async (dispatch: AppDispa
         const res = await profileAPI.getStatus(userId)
         dispatch(setStatus(res))
     } catch (error) {
-        console.log(error)
+        dispatch(globalErrorHandler(error))
     } finally {
         dispatch(toggleAuthFetching(false))
     }
@@ -169,7 +170,7 @@ export const updateStatus = (status: string): AppThunk => async (dispatch: AppDi
         const res: { resultCode: number } = await profileAPI.updateStatus(status)
         if (res.resultCode === 0) dispatch(setStatus(status))
     } catch (error) {
-        console.log(error)
+        dispatch(globalErrorHandler(error))
     } finally {
         dispatch(toggleAuthFetching(false))
     }
@@ -196,7 +197,7 @@ try {
                                                 res.messages[0].toLowerCase().includes('github')? {'contacts': {'github': res.messages}}:undefined))}
 
    } catch (error) {
-        console.log(error)
+    dispatch(globalErrorHandler(error))
     } finally {
         dispatch(toggleAuthFetching(false))
     }
@@ -208,7 +209,7 @@ export const savePhoto = (file: File): AppThunk => async (dispatch: AppDispatch)
         console.log(res)
         if (res.resultCode === 0) dispatch(savePhotoSuccess(res.data.photos))
     } catch (error) {
-        console.log(error)
+        dispatch(globalErrorHandler(error))
     } finally {
         dispatch(toggleAuthFetching(false))
     }

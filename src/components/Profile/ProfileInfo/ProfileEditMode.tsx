@@ -36,7 +36,7 @@ export const ProfileEditMode = (props: InjectedFormProps<ProfileInfoType>) => {
                 {arrayJSX.map(jsx => <div className={s.contacts} key={arrayJSX.indexOf(jsx)}>{jsx}</div>)}
             </div>
             <div>
-                <button>Save</button>
+                <button style={{borderRadius: 7}}>Save</button>
             </div>
         </form>
     )

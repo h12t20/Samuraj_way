@@ -7,11 +7,15 @@ export const authAPI = {
         return response.data;
     },
     async login(loginData: LoginFormType) {
-        const response = await instance.post(`/auth/login`, loginData);
+        const response = await instance.post(`auth/login`, loginData);
         return response.data;
     },
     async logout() {
-        const response = await instance.delete(`/auth/login`);
+        const response = await instance.delete(`auth/login`);
+        return response.data;
+    },
+    async captcha() {
+        const response = await instance.get(`security/get-captcha-url`);
         return response.data;
     }
 }

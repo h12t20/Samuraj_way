@@ -12,13 +12,15 @@ export type LoginFormType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha: string
 }
 export const maxLength50 = maxLengthCreator(50)
 export const maxLength200 = maxLengthCreator(200)
 export const minLength4 = minLengthCreator(4)
 
 export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
-    console.log(props)
+   // @ts-ignore
+    const {captchaURL} = props
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -33,29 +35,36 @@ export const LoginForm = (props: InjectedFormProps<LoginFormType>) => {
                 <Field type={'checkbox'} name={'rememberMe'} component={Input} />
                 <div>remember me</div>
             </div>
+         {captchaURL && <img src={captchaURL} alt={'captcha'}/>}
+            {captchaURL && <div>
+                <Field autoComplete={'off'} placeholder={'Symbols from image'} type='captcha' name={'captcha'} component={Input}
+                       validate={[required, maxLength50]} className={s.field}/>
+            </div>}
             <div>
                 <button>Login</button>
             </div>
         </form>
     )
 }
-const LoginReduxForm = reduxForm<LoginFormType>({form: 'login'})(LoginForm)
+const LoginReduxForm:any = reduxForm<LoginFormType>({form: 'login'})(LoginForm)
 const Login = (props: {
     login: (formData: LoginFormType) => void,
-    isAuth?: string | null
+    isAuth?: string | null,
+    captcha?: string | null
 }) => {
     const onSubmit = (formData: LoginFormType) => {
         props.login(formData)
     }
     if (props.isAuth) return <Redirect to={'/profile'}/>
+    // @ts-ignore
     return (
         <div className={s.container}>
             <div className={s.login}><h1>Login</h1>
-                <LoginReduxForm onSubmit={onSubmit}/>
+                <LoginReduxForm onSubmit={onSubmit} captchaURL={props.captcha}/>
             </div>
         </div>
     )
 }
-const mstP = (state: StateType) => ({isAuth: state.auth.login})
+const mstP = (state: StateType) => ({isAuth: state.auth.login, captcha: state.auth.captchaURL})
 export default connect(mstP, {login})(Login)
 

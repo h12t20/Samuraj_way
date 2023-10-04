@@ -70,7 +70,9 @@ padding: 10px 10px 10px 10px;
     cursor: pointer;
 }
 .edit:hover{
-    background-color: #ecf0f1;
+    background-color: #3498db;
+    color: rgb(255, 255, 255);
+    text-decoration-color: rgb(255, 255, 255);
 }
 .editBlock {
     width: 100%;

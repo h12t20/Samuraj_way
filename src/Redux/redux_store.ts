@@ -17,10 +17,10 @@ import {
     users_reducer,
     UserType
 } from "./users_reducer";
-import {auth_reducer, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
+import {auth_reducer, GetCaptchaURLType, SetUserDataType, ToggleAuthFetchingType} from './auth_reducer'
 import {reducer as formReducer} from 'redux-form'
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
-import {app_reducer, SetInitialized} from "./app_reducer";
+import {app_reducer, SetGlobalError, SetInitialized} from "./app_reducer";
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const reducers = combineReducers({
@@ -53,6 +53,8 @@ export type ActionType =
     | SavePhotoSuccessType
 | SetProfileEditModeType
 |SetFormSubmitStatusType
+| GetCaptchaURLType
+| SetGlobalError
 export type ContactType = {
         facebook: string | null,
         website: string | null,
@@ -113,10 +115,12 @@ export type AuthType = {
     id: number | null,
     email: string | null,
     login: string | null,
-    isFetching: boolean
+    isFetching: boolean,
+    captchaURL: string | null
 }
 export type AppStateType = {
-    initialized: false
+    initialized: boolean,
+    globalError: unknown
 }
 export type StateType = {
     messagesPage: MessageType,
