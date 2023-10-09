@@ -24,22 +24,20 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) props.savePhoto(e.target.files[0])
     }
-    const inputRef = useRef(null);
-    const imgRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
 
     function handleClick() {
-        // @ts-ignore
-        inputRef.current.click()
+        inputRef && inputRef.current?.click()
     }
 
     function mouseOverHandler() {
-        // @ts-ignore
-        if (props.isOwner) {imgRef.current.className = s.mouseOver}
+        if (props.isOwner && imgRef.current) {
+           imgRef.current.className = s.mouseOver}
     }
 
     function mouseLeaveHandler() {
-        // @ts-ignore
-        if (props.isOwner) {imgRef.current.className = s.label}
+        if (props.isOwner && imgRef.current) {imgRef.current.className = s.label}
     }
 
     if (!props.profileInfo) return <Preloader/>
@@ -62,7 +60,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                   </div>
 
                 {props.isOwner &&
-                    <div><input className={s.sendPhotoInput} type="file" ref={inputRef} onChange={onMainPhotoSelected}/>
+                    <div><input className={s.sendPhotoInput} type="file" accept={'image/*'} ref={inputRef} onChange={onMainPhotoSelected}/>
                     </div>}
                 </div>
             </div>
