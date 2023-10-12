@@ -49,7 +49,7 @@ export const Pagination = React.memo((props: UsersPropsType) => {
                 }}>{'\<<'} </span>}
                 {pagesCount > 10 && curPage!== pagesCount && <span className={s.pagination} onClick={() => {
                     props.onPageChanged(curPage < pagesCount ? curPage + 1 : pagesCount)
-                }}>{'\>>'}</span>}
+                }} >{'\>>'}</span>}
             </div>
         </div>
     )
